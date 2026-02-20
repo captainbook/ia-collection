@@ -54,7 +54,7 @@ class LazyCollection implements Enumerable
      * @param  callable|null  $callback
      * @return static
      */
-    public static function times($number, callable $callback = null)
+    public static function times($number, ?callable $callback = null)
     {
         if ($number < 1) {
             return new static;
@@ -349,7 +349,7 @@ class LazyCollection implements Enumerable
      * @param  callable|null  $callback
      * @return static
      */
-    public function filter(callable $callback = null)
+    public function filter(?callable $callback = null)
     {
         if (is_null($callback)) {
             $callback = function ($value) {
@@ -373,7 +373,7 @@ class LazyCollection implements Enumerable
      * @param  mixed  $default
      * @return mixed
      */
-    public function first(callable $callback = null, $default = null)
+    public function first(?callable $callback = null, $default = null)
     {
         $iterator = $this->getIterator();
 
@@ -500,7 +500,8 @@ class LazyCollection implements Enumerable
         $count = count($keys);
 
         foreach ($this as $key => $value) {
-            if (array_key_exists($key, $keys) && --$count == 0) {
+            $normalizedKey = is_int($key) || is_string($key) ? $key : (string) $key;
+            if (array_key_exists($normalizedKey, $keys) && --$count == 0) {
                 return true;
             }
         }
@@ -585,7 +586,7 @@ class LazyCollection implements Enumerable
      * @param  mixed  $default
      * @return mixed
      */
-    public function last(callable $callback = null, $default = null)
+    public function last(?callable $callback = null, $default = null)
     {
         $needle = $placeholder = new stdClass;
 
@@ -780,7 +781,8 @@ class LazyCollection implements Enumerable
                 $keys = array_flip($keys);
 
                 foreach ($this as $key => $value) {
-                    if (array_key_exists($key, $keys)) {
+                    $normalizedKey = is_int($key) || is_string($key) ? $key : (string) $key;
+                    if (array_key_exists($normalizedKey, $keys)) {
                         yield $key => $value;
 
                         unset($keys[$key]);
@@ -853,10 +855,11 @@ class LazyCollection implements Enumerable
             $items = $this->getArrayableItems($items);
 
             foreach ($this as $key => $value) {
-                if (array_key_exists($key, $items)) {
-                    yield $key => $items[$key];
+                $normalizedKey = is_int($key) || is_string($key) ? $key : (string) $key;
+                if (array_key_exists($normalizedKey, $items)) {
+                    yield $key => $items[$normalizedKey];
 
-                    unset($items[$key]);
+                    unset($items[$normalizedKey]);
                 } else {
                     yield $key => $value;
                 }

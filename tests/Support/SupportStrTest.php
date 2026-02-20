@@ -439,7 +439,7 @@ class SupportStrTest extends TestCase
         $this->assertSame('', Str::slug(null));
     }
 
-    public function validUuidList()
+    public static function validUuidList()
     {
         return [
             ['a0a2a2d2-0b87-4a18-83f2-2529882be2de'],
@@ -455,7 +455,7 @@ class SupportStrTest extends TestCase
         ];
     }
 
-    public function invalidUuidList()
+    public static function invalidUuidList()
     {
         return [
             ['not a valid uuid so we can test this'],
