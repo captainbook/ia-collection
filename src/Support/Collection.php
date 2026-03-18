@@ -523,7 +523,7 @@ class Collection implements ArrayAccess, Enumerable
         $first = $this->first();
 
         if (is_array($first) || is_object($first)) {
-            return implode($glue, $this->pluck($value)->all());
+            return implode($glue ?? '', $this->pluck($value)->all());
         }
 
         return implode($value, $this->items);
@@ -1061,9 +1061,13 @@ class Collection implements ArrayAccess, Enumerable
     {
         $items = $this->items;
 
-        $callback && is_callable($callback)
-            ? uasort($items, $callback)
-            : asort($items, $callback);
+        if ($callback && is_callable($callback)) {
+            uasort($items, $callback);
+        } elseif (is_null($callback)) {
+            asort($items);
+        } else {
+            asort($items, $callback);
+        }
 
         return new static($items);
     }

@@ -209,8 +209,16 @@ class Str
      */
     public static function endsWith($haystack, $needles)
     {
+        $haystack = (string) $haystack;
+
         foreach ((array) $needles as $needle) {
-            if (substr($haystack, -strlen($needle)) === (string) $needle) {
+            $needle = (string) $needle;
+
+            if ($needle === '') {
+                continue;
+            }
+
+            if (substr($haystack, -strlen($needle)) === $needle) {
                 return true;
             }
         }

@@ -4,6 +4,7 @@ namespace IlluminateAgnostic\Collection\Tests\Support;
 
 use IlluminateAgnostic\Collection\Support\Str;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\UuidInterface;
 
 class SupportStrTest extends TestCase
@@ -257,17 +258,13 @@ class SupportStrTest extends TestCase
         $this->assertFalse(Str::is([], 'test'));
     }
 
-    /**
-     * @dataProvider validUuidList
-     */
+    #[DataProvider('validUuidList')]
     public function testIsUuidWithValidUuid($uuid)
     {
         $this->assertTrue(Str::isUuid($uuid));
     }
 
-    /**
-     * @dataProvider invalidUuidList
-     */
+    #[DataProvider('invalidUuidList')]
     public function testIsUuidWithInvalidUuid($uuid)
     {
         $this->assertFalse(Str::isUuid($uuid));

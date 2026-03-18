@@ -1207,7 +1207,7 @@ class LazyCollection implements Enumerable
      *
      * @return \Traversable
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return $this->makeIterator($this->source);
     }
@@ -1217,7 +1217,7 @@ class LazyCollection implements Enumerable
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         if (is_array($this->source)) {
             return count($this->source);

@@ -605,7 +605,7 @@ class Arr
      * @param  array  $array
      * @return array
      */
-    public static function sortRecursive($array)
+    public static function sortRecursive($array): array
     {
         foreach ($array as &$value) {
             if (is_array($value)) {
@@ -625,12 +625,12 @@ class Arr
     /**
      * Convert the array into a query string.
      *
-     * @param  array  $array
+     * @param array $array
      * @return string
      */
-    public static function query($array)
+    public static function query(array $array): string
     {
-        return http_build_query($array, null, '&', PHP_QUERY_RFC3986);
+        return http_build_query($array, '', '&', PHP_QUERY_RFC3986);
     }
 
     /**
